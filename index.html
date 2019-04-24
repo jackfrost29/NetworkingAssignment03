@@ -2,11 +2,18 @@
 
 <head>
     <title>Javascript example</title>
-    <script src="hello.js"></script>
+    <script>
+        function demoParagraphCreation() {
+            for (let i = 1; i <= 10; i++) {
+                var pgraph = document.createElement("p");
+                p.innerHTML = "No of paragraph: " + i;
+                document.body.appendChild(pgraph);
+            }
+
+        }
+    </script>
 </head>
 
-<h1>Python is Awsome</h1>
+<body onload="demoParagraphCreation()">
 
-<button onclick="displayText()">Click Me</button>
-
-<p id="demo"></p>
+</body>
