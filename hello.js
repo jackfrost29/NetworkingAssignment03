@@ -1,3 +1,4 @@
+/*
 function greetMe(yourName) {
     greetMe('world');
 }
@@ -13,4 +14,15 @@ function demoParagraphCreation() {
         document.body.appendChild(pgraph);
     }
 
+}
+*/
+
+var obj = {
+    myFunc: function(){
+        for (let i = 1; i <= 10; i++) {
+            var pgraph = document.createElement("p");
+            p.innerHTML = "No of paragraph: " + i;
+            document.body.appendChild(pgraph);
+        }
+    }
 }
