@@ -1,3 +1,51 @@
 <!DOCTYPE html>
 
-<h1>Hello {{ name }}</h1>
+<head>
+    <style>
+        .outter{
+            display: flex;
+            justify-content: space-evenly;
+        }
+
+        .inner{
+            border: 5px solid white;
+            width: 28%;
+            background-color: white;
+            float: left;
+        }
+
+    </style>
+</head>
+
+
+
+<div class="outter">
+    {% for obj in dic %}
+        <div class="inner">
+            <img src="{{ 'images/' + obj['id'] + '.jpeg' }}" alt=""><br>
+            ID: {{ obj['id'] }}<br>
+            Album: {{ obj['album'] }}<br>
+            Artist: {{ obj['artist'] }}<br>
+            Price: ${{ obj['price'] }}<br>
+        </div>
+    {% endfor %}
+</div>
+
+
+<form action="" method="POST">
+    ID:<br>
+    <input type="text" name="id"><br>
+    Quantity:<br>
+    <input type="text" name="quantity"><br>
+    First Name:<br>
+    <input type="text" name="first_name"><br>
+    Last Name:<br>
+    <input type="text" name="last_name"><br>
+    Post Code:<br>
+    <input type="text" name="post_code"><br>
+    Credit card no:<br>
+    <input type="text" name="card_no"><br>
+    PIN:<br>
+    <input type="password" name="pin"><br>
+    <input type="submit" value="GO!">
+</form>

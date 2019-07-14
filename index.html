@@ -2,28 +2,98 @@
 
 <head>
     <style>
-        .product {
-            padding: 8px;
+        .outter{
+            display: flex;
+            justify-content: space-evenly;
         }
 
-        img {
-            max-width: 30%;
-            height: auto;
+        .inner{
+            border: 5px solid white;
+            width: 28%;
+            background-color: white;
+            float: left;
         }
+
     </style>
 </head>
 
-<h1>Hello Abid Vai</h1>
 
-<div class="left" style="float:left; width: 25%;">
-    <form action="/" method="get">
-        First name: <input type="text" name="fname"><br>
-        Last name: <input type="text" name="lname"><br>
-        <input type="submit" value="Submit">
-    </form>
+
+<div class="outter">
+    
+        <div class="inner">
+            <img src="images/101.jpeg" alt=""><br>
+            ID: 101<br>
+            Album: Dark Side of the Moon<br>
+            Artist: Pink Floyed<br>
+            Price: $200<br>
+        </div>
+    
+        <div class="inner">
+            <img src="images/102.jpeg" alt=""><br>
+            ID: 102<br>
+            Album: Sgt. Pepper's Lonely Hearts Club Band<br>
+            Artist: The Beatles<br>
+            Price: $150<br>
+        </div>
+    
+        <div class="inner">
+            <img src="images/103.jpeg" alt=""><br>
+            ID: 103<br>
+            Album: Abbey Road<br>
+            Artist: The Beatles<br>
+            Price: $250<br>
+        </div>
+    
+        <div class="inner">
+            <img src="images/104.jpeg" alt=""><br>
+            ID: 104<br>
+            Album: ZOSO<br>
+            Artist: Led Zeplin<br>
+            Price: $175<br>
+        </div>
+    
+        <div class="inner">
+            <img src="images/105.jpeg" alt=""><br>
+            ID: 105<br>
+            Album: A Night at the Opera<br>
+            Artist: Queen<br>
+            Price: $255<br>
+        </div>
+    
+        <div class="inner">
+            <img src="images/106.jpeg" alt=""><br>
+            ID: 106<br>
+            Album: Thriller<br>
+            Artist: Michael Jackson<br>
+            Price: $320<br>
+        </div>
+    
+        <div class="inner">
+            <img src="images/107.jpeg" alt=""><br>
+            ID: 107<br>
+            Album: The Wall<br>
+            Artist: Pink Floyed<br>
+            Price: $299<br>
+        </div>
+    
 </div>
 
-<div class="product" style="float:right; width: 75%;">
-    <img src="images/flamingo.jpg">
-    <p>Bird</p>
-</div>
+
+<form action="" method="POST">
+    ID:<br>
+    <input type="text" name="id"><br>
+    Quantity:<br>
+    <input type="text" name="quantity"><br>
+    First Name:<br>
+    <input type="text" name="first_name"><br>
+    Last Name:<br>
+    <input type="text" name="last_name"><br>
+    Post Code:<br>
+    <input type="text" name="post_code"><br>
+    Credit card no:<br>
+    <input type="text" name="card_no"><br>
+    PIN:<br>
+    <input type="password" name="pin"><br>
+    <input type="submit" value="GO!">
+</form>
