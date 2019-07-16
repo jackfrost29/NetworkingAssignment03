@@ -69,8 +69,9 @@ class MyHandler(BaseHTTPRequestHandler):
             res = "Sorry, invalid information"
         else:
             # successfull
+            x = response.split("&")
             print("successful")
-            res = "Transaction Successful"
+            res = "Transaction Successful" + "\nCost: " + str(x[2]) + "\nBalance: " + str(x[1])
 
         self.send_response(200)
         self.send_header('Content-type', 'text/html')

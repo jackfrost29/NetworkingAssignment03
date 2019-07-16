@@ -14,10 +14,10 @@ def dict_factory(cursor, row):
 
 class MyTCPHandler(socketserver.BaseRequestHandler):
     """
-    The request handler class for our server.
+    The request handler class for our bank server.
 
     It is instantiated once per connection to the server, and must
-    override the handle() method to implement communication to the
+    override the handle() method to implement communication with the
     client.
     """
 
@@ -74,7 +74,7 @@ class MyTCPHandler(socketserver.BaseRequestHandler):
                     balance -= price*quantity
                     command = "update buyer set balance="+str(balance)+" where credit_no=\""+credit_no+"\";"
                     cur.execute(command)
-                    self.request.sendall(bytes("1", "utf-8"))
+                    self.request.sendall(bytes("1&"+str(balance)+"&"+str(price*quantity), "utf-8"))
                 else:
                     # insufficient balance
                     self.request.sendall(bytes("0", "utf-8"))
