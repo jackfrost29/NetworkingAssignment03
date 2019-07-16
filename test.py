@@ -5,6 +5,7 @@ import jinja2
 import sys
 import cgi
 import sqlite3
+import threading
 
 
 # accept three command line inputs: STORE_PORT, BANK_HOST_IP, BANK_PORT
@@ -20,8 +21,8 @@ class MyHandler(BaseHTTPRequestHandler):
 
     def verify(self, data):
         
-        p = sys.argv[2]
-        HOST, PORT = sys.argv[1], int(p)
+        p = sys.argv[3]
+        HOST, PORT = sys.argv[2], int(p)
 
 
         # Create a socket (SOCK_STREAM means a TCP socket)
@@ -44,11 +45,17 @@ class MyHandler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         form = cgi.FieldStorage()
-        print(form)
-        req = str(form.getvalue("id")) + ":" + str(form.getvalue("quantity")) + ":" + str(form.getvalue("first_name")) \
-            + ":" + str(form.getvalue("last_name")) + ":" + str(form.getvalue("post_code")) + ":" + str(form.getvalue("card_no"))
+
+
+        content_len = int(self.headers.get('Content-Length'))
+        req = self.rfile.read(content_len)
         
-        response = self.verify(req)
+
+        print(req)
+
+
+
+        response = self.verify(str(req))
 
         res = None
 
@@ -63,7 +70,7 @@ class MyHandler(BaseHTTPRequestHandler):
         else:
             # successfull
             print("successful")
-            res = "Sorry, insufficient balance"
+            res = "Transaction Successful"
 
         self.send_response(200)
         self.send_header('Content-type', 'text/html')
@@ -76,7 +83,7 @@ class MyHandler(BaseHTTPRequestHandler):
         dic = self.scanDB()
 
         environment = jinja2.Environment(loader=jinja2.FileSystemLoader(current_path))
-        output = environment.get_template('response_template.html.j2').render(response=res)
+        output = environment.get_template('response_template.html.j2').render(response=res, port=sys.argv[1])
 
         # save the rendered template to index.html
         with open(rendered_file_path, 'w') as result_file:
@@ -84,6 +91,10 @@ class MyHandler(BaseHTTPRequestHandler):
 
         with open(rendered_file_path, 'rb') as file:
             self.wfile.write(file.read())
+
+        assassin = threading.Thread(target=httpd.shutdown)
+        assassin.daemon = True
+        assassin.start()
 
 
 
@@ -133,8 +144,29 @@ class MyHandler(BaseHTTPRequestHandler):
         print("rendered file path " + rendered_file_path)
         '''
 
-httpd = HTTPServer(('localhost', 8000), MyHandler)
-try:
-    httpd.serve_forever()
-except KeyboardInterrupt:
-    pass
+httpd = HTTPServer(('localhost', int(sys.argv[1])), MyHandler, bind_and_activate=False)
+httpd.allow_reuse_address = True
+httpd.daemon_threads = True
+httpd.server_bind()
+httpd.server_activate()
+print("Store server running at port: " + sys.argv[1])
+
+
+if __name__=="__main__":
+    try:
+        while True:
+            httpd.serve_forever()
+            print("Store server restarted at port: " + sys.argv[1])
+            
+            httpd = HTTPServer(('localhost', int(sys.argv[1])), MyHandler, bind_and_activate=False)
+            httpd.allow_reuse_address = True
+            httpd.daemon_threads = True
+            httpd.server_bind()
+            httpd.server_activate()
+
+
+    except KeyboardInterrupt:
+        pass
+
+
+# accept three command line inputs: STORE_PORT, BANK_HOST_IP, BANK_PORT
